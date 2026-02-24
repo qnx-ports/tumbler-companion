@@ -1,0 +1,39 @@
+# Maintainer: Natanael Copa <ncopa@alpinelinux.org>
+pkgname=tumbler
+pkgver=4.21.0
+pkgrel=0
+pkgdesc="D-Bus thumbnail service"
+url="https://gitlab.xfce.org/xfce/tumbler"
+arch="all"
+license="GPL-2.0-or-later"
+#libopenraw is dependent on rust
+#libgepub is dependent on webkit2gtk
+depends="ffmpegthumbnailer libgsf libjpeg-turbo libxfce4util gdk-pixbuf libcurl"
+makedepends="
+	curl-dev
+	ffmpegthumbnailer-dev
+	libgsf-dev
+	libjpeg-turbo-dev
+	libxfce4util-dev
+	xfce4-dev-tools
+	gtk3-dev
+	meson
+	"
+subpackages="$pkgname-dev $pkgname-lang"
+source="https://archive.xfce.org/src/xfce/tumbler/${pkgver%.*}/tumbler-$pkgver.tar.xz"
+
+build() {
+	abuild-meson . output
+	
+	meson compile -C output 
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install --no-rebuild -C output
+	rm -r "$pkgdir"/usr/lib/systemd
+}
+
+
+sha512sums="
+933ea87234d20835c8b937e139390773a1798764a256f560a86ab7bb6adf37cfbfd0a9e752baf2a02f2c01facc07ee5cf0dfc967b1ee9f99425d30e99a4317aa  tumbler-4.21.0.tar.xz
+"
