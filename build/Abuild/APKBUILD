@@ -1,7 +1,7 @@
 # Maintainer: Natanael Copa <ncopa@alpinelinux.org>
 pkgname=tumbler
 pkgver=4.21.0
-pkgrel=0
+pkgrel=${pkgrel:-0}
 pkgdesc="D-Bus thumbnail service"
 url="https://gitlab.xfce.org/xfce/tumbler"
 arch="all"
@@ -34,6 +34,7 @@ package() {
 }
 
 
+options="$options ${DISABLE_CHECK:+!check}"
 sha512sums="
 933ea87234d20835c8b937e139390773a1798764a256f560a86ab7bb6adf37cfbfd0a9e752baf2a02f2c01facc07ee5cf0dfc967b1ee9f99425d30e99a4317aa  tumbler-4.21.0.tar.xz
 "
